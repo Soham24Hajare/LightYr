@@ -41,7 +41,7 @@ app.get("/", (req, res) => {
 
 app.post("/signup", async(req, res) => {
     console.log(req.body);
-    const {emial} = req.body
+    const {email} = req.body
 
     userModel.findOne({email : email},(err,result)=>{
       console.log(result)
