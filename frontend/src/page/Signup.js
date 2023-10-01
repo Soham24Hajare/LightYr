@@ -211,23 +211,52 @@ function Signup() {
 
   // }
   console.log(process.env.REACT_APP_SERVER_DOMIN);
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const { firstName, email, password, confirmPassword } = data;
+  //   if (firstName && email && password && confirmPassword) {
+  //     if (password === confirmPassword) {
+  //       const fetchData = await fetch(
+  //         `${process.env.REACT_APP_SERVER_DOMIN}/signup`,
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             "content-type": "application/json",
+  //           },
+  //           body: JSON.stringify(data),
+  //         }
+  //       );
+
+  //       const dataRes = await fetchData.json();
+  //     } else {
+  //       alert("password and confirm password not equal");
+  //     }
+  //   } else {
+  //     alert("Please Enter required fields");
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { firstName, email, password, confirmPassword } = data;
     if (firstName && email && password && confirmPassword) {
       if (password === confirmPassword) {
         const fetchData = await fetch(
-          `${process.env.REACT_APP_SERVER_DOMIN}/signup`,
+          `${process.env.REACT_APP_SERVER_DOMIN}/signup`,  // Remove the space before "/signup"
           {
             method: "POST",
             headers: {
-              "content-type": "application/json",
+              "Content-Type": "application/json",  // Use "Content-Type" with a hyphen
             },
             body: JSON.stringify(data),
           }
         );
-
+  
         const dataRes = await fetchData.json();
+        console.log(dataRes);
+  
+        alert("successful");
+        // navigate("/login")
       } else {
         alert("password and confirm password not equal");
       }
@@ -235,7 +264,7 @@ function Signup() {
       alert("Please Enter required fields");
     }
   };
-
+  
   return (
     <div className="p-3 md:p-4">
       <div className="w-full max-w-sm bg-white m-auto flex  flex-col p-4">
