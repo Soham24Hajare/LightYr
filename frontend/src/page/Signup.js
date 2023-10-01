@@ -255,7 +255,7 @@ function Signup() {
         const dataRes = await fetchData.json();
         console.log(dataRes);
   
-        alert("successful");
+        alert(dataRes.message);
         // navigate("/login")
       } else {
         alert("password and confirm password not equal");
