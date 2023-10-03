@@ -41,20 +41,37 @@ app.get("/", (req, res) => {
 
 app.post("/signup", async(req, res) => {
     console.log(req.body);
-    const {emial} = req.body
+    const {email} = req.body
 
-    userModel.findOne({email : email},(err,result)=>{
-      console.log(result)
-      console.log(err)
-      if(result){
-        res.send({message : "Email id is already registered"})
+    // userModel.findOne({email : email},(err,result)=>{
+    //   console.log(result)
+    //   console.log(err)
+    //   if(result){
+    //     res.send({message : "Email id is already registered"})
+    //   }
+    //   else{
+    //     const data = userModel(req.body)
+    //     const save = data.save()
+    //     res.send({message: "successfully registered"})
+    //   }
+    // })
+    try {
+      const result = await userModel.findOne({ email: email });
+      console.log(result);
+    
+      if (result) {
+        res.send({ message: "Email id is already registered" });
+      } else {
+        const data = new userModel(req.body);
+        await data.save();
+        res.send({ message: "successfully registered" });
       }
-      else{
-        const data = userModel(req.body)
-        const save = data.save()
-        res.send({message: "successfully registered"})
-      }
-    })
+    } catch (err) {
+      console.error(err);
+      // Handle the error appropriately, e.g., sending an error response to the client
+      res.status(500).send({ message: "Internal server error" });
+    }
+    
 })
   
 

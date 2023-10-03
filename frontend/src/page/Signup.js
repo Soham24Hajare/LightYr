@@ -242,26 +242,30 @@ function Signup() {
     if (firstName && email && password && confirmPassword) {
       if (password === confirmPassword) {
         const fetchData = await fetch(
-          `${process.env.REACT_APP_SERVER_DOMIN}/signup`,  // Remove the space before "/signup"
+          `${process.env.REACT_APP_SERVER_DOMIN}/signup`,
           {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",  // Use "Content-Type" with a hyphen
+              "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
           }
         );
   
-        const dataRes = await fetchData.json();
-        console.log(dataRes);
-  
-        alert(dataRes.message);
-        // navigate("/login")
+        if (fetchData.status === 200) {
+          const dataRes = await fetchData.json();
+          console.log(dataRes);
+          alert(dataRes.message);
+          // navigate("/login")
+        } else {
+          const errorText = await fetchData.text();
+          alert(`Error: ${errorText}`);
+        }
       } else {
-        alert("password and confirm password not equal");
+        alert("Password and Confirm Password do not match");
       }
     } else {
-      alert("Please Enter required fields");
+      alert("Please fill in all required fields");
     }
   };
   
